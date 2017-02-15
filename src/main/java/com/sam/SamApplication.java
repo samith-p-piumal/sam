@@ -1,26 +1,43 @@
 
 package com.sam;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.stereotype.Controller;
+import org.springframework.core.env.Environment;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+import sun.jdbc.odbc.ee.DataSource;
 
-@SpringBootApplication
-@Controller
-@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
+import java.sql.Connection;
+import java.sql.SQLException;
+
+
+@SpringBootApplication//(exclude={DataSourceAutoConfiguration.class})
+@RestController
 public class SamApplication {
+
+	@Autowired
+	Environment environment;
+
+	/*@Autowired
+	DataSource dataSource;
+*/
 
 	public static void main(String[] args) {
 		SpringApplication.run(SamApplication.class, args);
 	}
 
-	@RequestMapping("/")
+	@RequestMapping("/user/{name}")
 	@ResponseBody
-	String home() {
-		return "Hello World!";
+	String home(@PathVariable String name) {
+		/*try {
+			Connection connection = dataSource.getConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}*/
+		return "Hello "+name+ environment.getProperty("app.name");
 	}
 }
 
