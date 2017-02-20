@@ -15,51 +15,34 @@ import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication//(exclude={DataSourceAutoConfiguration.class})
 @RestController
-@ComponentScan(basePackages = {"com.controller"})
+@ComponentScan(basePackages = {"com"})
 public class SamApplication {
 
 	@Autowired
 	Environment environment;
 
-	@Autowired
+
+    @Autowired
     CustomerService customerService;
 
-	/*@Autowired
-	DataSource dataSource;
-*/
+	/*public CustomerService getCustomerService() {
+		return customerService;
+	}*/
+
+
+	/*public void setCustomerService(CustomerService customerService) {
+		this.customerService = customerService;
+	}*/
 
 	public static void main(String[] args) {
 		SpringApplication.run(SamApplication.class, args);
 	}
 
-	/*@RequestMapping("/user")
-	@ResponseBody
-	//String home(@PathVariable String name) {
-	String home() {
-
-		*//*try {
-			Connection connection = dataSource.getConnection();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}*//*
-        Customer customer = new Customer();
-        customer.setEmpId(23L);
-        customer.setName("sagafgag");
-
-
-		customerService.add(customer);
-
-		return "Hello "
-				//+name"-"
-				//+customerService.getCustomer().getName()
-				+ environment.getProperty("app.name");
-	}*/
 
     @RequestMapping("/user/{name}")
     @ResponseBody
     String home1(@PathVariable String name) {
         Customer customer = new Customer();
-        customer.setEmpId(23L);
         customer.setName(name);
 
 
@@ -71,32 +54,21 @@ public class SamApplication {
                 + environment.getProperty("app.name");
     }
 
-   /* @RequestMapping("/error1")
+    @RequestMapping("/user/id/{id}")
     @ResponseBody
-    String home2() {
-        return "Hello error";
-    }*/
+    String home2(@PathVariable String id) {
+        Customer customerbean = new Customer();
+        customerbean.setEmpId(Long.parseLong(id));
+
+        customerbean = customerService.getById(customerbean);
+
+        return "Hello "
+                //+name"-"
+                + customerbean.getName() + " "
+                + environment.getProperty("app.name");
+    }
+
 
 }
 
 
-/*import org.springframework.boot.*;
-		import org.springframework.boot.autoconfigure.*;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.stereotype.*;
-		import org.springframework.web.bind.annotation.*;
-
-@Controller
-@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
-public class SamApplication {
-
-	@RequestMapping("/")
-	@ResponseBody
-	String home() {
-		return "Hello World!";
-	}
-
-	public static void main(String[] args) throws Exception {
-		SpringApplication.run(SamApplication.class, args);
-	}
-}*/

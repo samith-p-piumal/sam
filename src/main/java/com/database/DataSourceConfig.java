@@ -20,7 +20,7 @@ import java.util.Properties;
  * Created by samith_k on 2/15/2017.
  */
 @Configuration
-@ComponentScan(basePackages = {"com.module"})
+@ComponentScan(basePackages = {"com"})
 @EnableTransactionManagement
 class DataSourceConfig {
 

@@ -8,6 +8,10 @@ import java.sql.Blob;
  */
 @Entity
 @Table(name = "customer")
+@NamedQueries({
+        @NamedQuery(name = "Customer.find", query = "select c from Customer c" +
+                "  where" +
+                "    (:empId is null or c.empId = :empId)")})
 public class Customer{
 
     @Id

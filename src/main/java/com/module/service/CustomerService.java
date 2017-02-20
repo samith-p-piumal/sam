@@ -10,4 +10,6 @@ public interface CustomerService {
 
 
     void add(final Customer _customer);
+
+    Customer getById(Customer customer);
 }
