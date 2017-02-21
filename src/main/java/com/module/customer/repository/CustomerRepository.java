@@ -1,6 +1,6 @@
-package com.module.repository;
+package com.module.customer.repository;
 
-import com.module.entity.Customer;
+import com.module.customer.entity.Customer;
 
 import java.util.List;
 

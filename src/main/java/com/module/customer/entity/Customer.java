@@ -1,4 +1,4 @@
-package com.module.entity;
+package com.module.customer.entity;
 
 import javax.persistence.*;
 import java.sql.Blob;

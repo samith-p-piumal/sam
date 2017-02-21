@@ -1,7 +1,6 @@
 
-package com.controller;
-import com.module.entity.Customer;
-import com.module.service.CustomerService;
+package com.controller.customer;
+import com.module.customer.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,10 +12,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
-@SpringBootApplication//(exclude={DataSourceAutoConfiguration.class})
+@SpringBootApplication
 @RestController
-@ComponentScan(basePackages = {"com"})
-public class SamApplication {
+@ComponentScan(basePackages = {"com.controller","com.module"})
+public class Customer {
 
 	@Autowired
 	Environment environment;
@@ -25,39 +24,26 @@ public class SamApplication {
     @Autowired
     CustomerService customerService;
 
-	/*public CustomerService getCustomerService() {
-		return customerService;
-	}*/
-
-
-	/*public void setCustomerService(CustomerService customerService) {
-		this.customerService = customerService;
-	}*/
-
 	public static void main(String[] args) {
-		SpringApplication.run(SamApplication.class, args);
+		SpringApplication.run(Customer.class, args);
 	}
-
 
     @RequestMapping("/user/{name}")
     @ResponseBody
     String home1(@PathVariable String name) {
-        Customer customer = new Customer();
+        com.module.customer.entity.Customer customer = new com.module.customer.entity.Customer();
         customer.setName(name);
 
 
         customerService.add(customer);
 
-        return "Hello "
-                //+name"-"
-                //+customerService.getCustomer().getName()
-                + environment.getProperty("app.name");
+        return "Hello " + environment.getProperty("app.name");
     }
 
     @RequestMapping("/user/id/{id}")
     @ResponseBody
     String home2(@PathVariable String id) {
-        Customer customerbean = new Customer();
+        com.module.customer.entity.Customer customerbean = new com.module.customer.entity.Customer();
         customerbean.setEmpId(Long.parseLong(id));
 
         customerbean = customerService.getById(customerbean);

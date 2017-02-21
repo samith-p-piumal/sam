@@ -1,5 +1,6 @@
 package com.controller;
 
+import com.controller.customer.Customer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,7 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class SamApplicationTests {
-	SamApplication sa =  new SamApplication();
+	Customer sa =  new Customer();
 
 	@Test
 	public void contextLoads() {

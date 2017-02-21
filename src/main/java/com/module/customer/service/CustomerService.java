@@ -1,6 +1,6 @@
-package com.module.service;
+package com.module.customer.service;
 
-import com.module.entity.Customer;
+import com.module.customer.entity.Customer;
 
 /**
  * Created by samith_k on 2/16/2017.

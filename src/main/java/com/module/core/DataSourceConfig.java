@@ -1,4 +1,4 @@
-package com.database;
+package com.module.core;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,7 +20,7 @@ import java.util.Properties;
  * Created by samith_k on 2/15/2017.
  */
 @Configuration
-@ComponentScan(basePackages = {"com"})
+@ComponentScan(basePackages = {"com.module"})
 @EnableTransactionManagement
 class DataSourceConfig {
 
