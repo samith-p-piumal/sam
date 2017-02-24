@@ -1,6 +1,7 @@
 
 package com.controller.customer;
 
+import com.controller.common.Response;
 import com.module.customer.service.CustomerService;
 import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.spi.LoggerFactory;
@@ -11,15 +12,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.logging.LoggerConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 
 @SpringBootApplication
 @RestController
 @ComponentScan(basePackages = {"com.controller", "com.module"})
+@RequestMapping(consumes = "application/json", produces = "application/json")
 public class Customer {
 
     @Autowired
@@ -35,37 +35,44 @@ public class Customer {
         SpringApplication.run(Customer.class, args);
     }
 
-    @RequestMapping("/user/{name}")
-    @ResponseBody
-    String home1(@PathVariable String name) {
-        com.module.customer.entity.Customer customer = new com.module.customer.entity.Customer();
-        customer.setName(name);
+    @RequestMapping(method = RequestMethod.GET,value={"/user/"})
 
+    //@RequestMapping("/user/{name}")
+    @ResponseBody
+    Response insertCustomer(/*@RequestBody CustomerRequest customerRequest*/) {
+        com.module.customer.entity.Customer customer = new com.module.customer.entity.Customer();
+        customer.setName("123"/*customerRequest.getName()*/);
+
+        CustomerResponse customerResponse = new CustomerResponse();
 
         try {
 
-            logger.info("test log info");
+            //logger.info("Request : ",customerRequest);
             customerService.add(customer);
+
+            customerResponse.setName(customer.getEmpId()+"");
+            customerResponse.setEmpId(customer.getName());
+            customerResponse.setImage(customer.getImage());
+
+            logger.info("Request : ",customerResponse);
+
 
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
 
-        return "Hello " + environment.getProperty("app.name");
+        return customerResponse;
     }
 
     @RequestMapping("/user/id/{id}")
     @ResponseBody
-    String home2(@PathVariable String id) {
+    com.module.customer.entity.Customer home2(@PathVariable String id) {
         com.module.customer.entity.Customer customerbean = new com.module.customer.entity.Customer();
         customerbean.setEmpId(Long.parseLong(id));
 
         customerbean = customerService.getById(customerbean);
 
-        return "Hello "
-                //+name"-"
-                + customerbean.getName() + " "
-                + environment.getProperty("app.name");
+        return customerbean;
     }
 
 

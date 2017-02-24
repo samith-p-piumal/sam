@@ -1,6 +1,7 @@
 package com.module.customer.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Blob;
 
 /**
@@ -12,7 +13,7 @@ import java.sql.Blob;
         @NamedQuery(name = "Customer.find", query = "select c from Customer c" +
                 "  where" +
                 "    (:empId is null or c.empId = :empId)")})
-public class Customer{
+public class Customer {//implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
